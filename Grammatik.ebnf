@@ -1,0 +1,20 @@
+upper::= [A-Z]
+variable::= [a-z]
+axiom::=upper*
+input::=module(';' module)*
+production::=predecessor '->' rhs
+predecessor::=upper parmList? ('|'predicate)?
+parmList::='('variable (','variable)*')'
+rhs::=application application*
+
+relOp::='<'|'>'|'!='|'=='
+relExp::=numExp relOp numExp
+
+predicate::=conjunction ('||' conjunction)*
+conjunction::=primaryBool ('&&' primaryBool)*
+primaryBool::='true'|'false'|relExp|'('boolExp')'|variable
+
+numExp::=term('+'|'-' term)*
+term::=primaryNum ('*'|'/' primaryNum)
+primaryNum::=NUMBER|'('numExp')'|('+'|'-')primaryNum|variable
+
