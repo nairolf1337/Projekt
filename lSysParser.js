@@ -84,10 +84,10 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- lSys.setAxiom($$[$0-1]); return lSys 
+ console.log($$[$0-1]); lSys.setAxiom($$[$0-1]); return lSys 
 break;
 case 2:
- lSys.setAxiom($$[$0-2]); return lSys 
+ console.log($$[$0-2]); lSys.setAxiom($$[$0-2]); return lSys 
 break;
 case 3:
  this.$ = [$$[$0]]

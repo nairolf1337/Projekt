@@ -48,8 +48,8 @@ const lSys = new LSystem()
 %start input
 
 %%
-input:  axiom EOF { lSys.setAxiom($1); return lSys }
-      | axiom ';' rules { lSys.setAxiom($1); return lSys };
+input:  axiom EOF { console.log($1); lSys.setAxiom($1); return lSys }
+      | axiom ';' rules { console.log($1); lSys.setAxiom($1); return lSys };
 
 axiom:  ruleApp { $$ = [$1]}
       | ruleApp axiom { $$ = [$1].concat($2)};
