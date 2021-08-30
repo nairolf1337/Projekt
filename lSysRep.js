@@ -142,6 +142,7 @@ class ProductionApplication {
      * @param {Function[]} args 
      */
     constructor(production, args) {
+        console.log(typeof production)
         this.production = production
         this.args = args
     }

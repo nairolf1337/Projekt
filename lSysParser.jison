@@ -49,7 +49,7 @@ const lSys = new LSystem()
 
 %%
 input:  axiom EOF { lSys.setAxiom($1); return lSys }
-      | axiom ';' rules { lSys.setAxiom($1); return lSys }
+      | axiom ';' rules { lSys.setAxiom($1); return lSys };
 
 axiom:  ruleApp { $$ = [$1]}
       | ruleApp axiom { $$ = [$1].concat($2)};

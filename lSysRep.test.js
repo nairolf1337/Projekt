@@ -176,6 +176,7 @@ describe("Unparameterisiertes LSystem, zwei Produktionen; A;A=>B;B=>AB", () => {
     })
 
     it("Zustand nach dritter Iteration", ()=> {
+        console.log(lSys)
         lSys.iterate()
         lSys.iterate()
         lSys.iterate()
