@@ -45,21 +45,19 @@ const lSys = new LSystem()
 %left '/' '*'
 %right UMINUS NOT
 
-%start inputTwo
+%start input
 
 %%
-input:  axiom EOF
-      | axiom ';' rules;
+input:  axiom EOF { lSys.setAxiom($1); return lSys }
+      | axiom ';' rules { lSys.setAxiom($1); return lSys }
 
-axiom:  ruleApp
-      | ruleApp axiom;
+axiom:  ruleApp { $$ = [$1]}
+      | ruleApp axiom { $$ = [$1].concat($2)};
 
-rules:  module EOF { $1["symbol"]=$1.left.symbol; $$=[$1]; console.log(JSON.stringify($$)) }
-      | module ';' rules { $1["symbol"]=$1.left.symbol; $$=[$1].append($3) };
+rules:  module EOF { lSys.setProduction($1); $$=$1 }
+      | module ';' rules { lSys.setProduction($1); $$=$1 };
 
-inputTwo: moudle EOF { return $1 };
-
-module: lhs '->' rhs { $$ = new Production($1['lhs'], $3, $1['parameters'], $1['predicate']) };
+module: lhs '->' rhs { $$ = new Production($1['lhs'], $3, $1['parameters'], $1['predicate'], lSys) };
 
 lhs: prototype                      { $1['predicate'] = LExpression.makeTrue(); $$ = $1 }
    | prototype '|' lhsPredicate     { $1['predicate'] = $3; $$ = $1 };
