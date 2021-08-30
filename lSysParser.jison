@@ -2,7 +2,7 @@
 //Beginn Prolog
 const { LExpression, LSystem, Production, ProductionApplication } = require('./lSysRep.js')
 
-let parseResult;
+const lSys = new LSystem()
 %}
 
 %lex
@@ -57,29 +57,28 @@ axiom:  ruleApp
 rules:  module EOF { $1["symbol"]=$1.left.symbol; $$=[$1]; console.log(JSON.stringify($$)) }
       | module ';' rules { $1["symbol"]=$1.left.symbol; $$=[$1].append($3) };
 
-module: lhs '->' rhs { $$ = {left: $1, right: $3}};
+inputTwo: moudle EOF { return $1 };
 
-lhs: prototype                      { $$ = $1 }
-   | prototype '|' lhsPredicate     { $1['predicate'] = $3; $$=$1 };
+module: lhs '->' rhs { $$ = new Production($1['lhs'], $3, $1['parameters'], $1['predicate']) };
 
-prototype: SYMBOL                   { $$ = {symbol: $1} }
-         | SYMBOL '(' parmList ')'  { $$ = {symbol: $1, parameters: $3} };
+lhs: prototype                      { $1['predicate'] = LExpression.makeTrue(); $$ = $1 }
+   | prototype '|' lhsPredicate     { $1['predicate'] = $3; $$ = $1 };
+
+prototype: SYMBOL                   { $$ = {lhs: $1, parameters: []} }
+         | SYMBOL '(' parmList ')'  { $$ = {lhs: $1, parameters: $3} };
 
 lhsPredicate: relExp { $$ = $1 };
 
 rhs: ruleApp         { $$ = [$1] }
    | ruleApp rhs     { $$ = [$1].concat($2) };
 
-ruleApp: SYMBOL                  { $$ = {application: $1} }
-       | SYMBOL '(' argList ')' { $$ = {application: $1, arguments: $3}};
+ruleApp: SYMBOL                  { $$ = new ProductionApplication(lSys.makeGetProduction($1), []) }
+       | SYMBOL '(' argList ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $3)};
 
 parmList: variable { $$ = [$1] }               
         | variable ',' parmList  { $$ = [$1].concat($3) }; //Parameter jeweils vorne anfügen
 
 variable: VARIABLE { $$ = $1 };
-
-
-inputTwo: argList EOF { return $1 };
 
 argList: relExp      { $$ = [$1] }
        | relExp ',' argList  { $$ = [$1].concat($3) };
