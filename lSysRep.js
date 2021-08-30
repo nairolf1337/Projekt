@@ -54,8 +54,8 @@ class LSystem {
      * @param {[ProductionApplication]} axiom 
      */
     setAxiom(axiom) {
-        this.axiom = axiom
-        this.state = axiom
+        this.axiom = axiom.map(prodApp=>new ProductionApplication(prodApp.production(), prodApp.args))
+        this.state = this.axiom
     }
     
     getProduction(lhs) {
@@ -71,7 +71,7 @@ class LSystem {
         return ()=>this.productions[lhs]
     }
 
-    readableState() {
+    get readableState() {
         return this.state.map(prodApp=>{
             let argsAux = (typeof prodApp.args !== 'undefined')?prodApp.args.map(argFun=>argFun()):[]
             return {lhs: prodApp.production.lhs, args: argsAux}
@@ -142,7 +142,6 @@ class ProductionApplication {
      * @param {Function[]} args 
      */
     constructor(production, args) {
-        console.log('prod. type: ', typeof production)
         this.production = production
         this.args = args
     }

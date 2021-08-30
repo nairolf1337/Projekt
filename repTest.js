@@ -10,8 +10,6 @@ lSys = new LSystem()
 rhsA = [new ProductionApplication(lSys.makeGetProduction('B'), [])]
 prodA = new Production('A', rhsA, [], LExpression.makeTrue(), lSys)
 
-console.log(prodA)
-
 rhsB = [new ProductionApplication(lSys.makeGetProduction('A'), []), new ProductionApplication(lSys.makeGetProduction('B'), [])]
 prodB = new Production('B', rhsB, [], LExpression.makeTrue(), lSys)
 
@@ -25,4 +23,4 @@ console.log(prodB)*/
 
 lSys.setAxiom([new ProductionApplication(lSys.makeGetProduction('A'), [])])
 
-console.log(lSys.state)
+

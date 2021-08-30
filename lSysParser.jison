@@ -48,11 +48,12 @@ const lSys = new LSystem()
 %start input
 
 %%
-input:  axiom EOF { console.log($1); lSys.setAxiom($1); return lSys }
-      | axiom ';' rules { console.log($1); lSys.setAxiom($1); return lSys };
+input:  axiom EOF { lSys.setAxiom($1); return lSys }
+      | axiom ';' rules { lSys.setAxiom($1); return lSys };
 
 axiom:  ruleApp { $$ = [$1]}
       | ruleApp axiom { $$ = [$1].concat($2)};
+
 
 rules:  module EOF { lSys.setProduction($1); $$=$1 }
       | module ';' rules { lSys.setProduction($1); $$=$1 };
@@ -71,7 +72,7 @@ rhs: ruleApp         { $$ = [$1] }
    | ruleApp rhs     { $$ = [$1].concat($2) };
 
 ruleApp: SYMBOL                  { $$ = new ProductionApplication(lSys.makeGetProduction($1), []) }
-       | SYMBOL '(' argList ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $3)};
+       | SYMBOL '(' argList ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $3) };
 
 parmList: variable { $$ = [$1] }               
         | variable ',' parmList  { $$ = [$1].concat($3) }; //Parameter jeweils vorne anfügen

@@ -84,10 +84,10 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- console.log($$[$0-1]); lSys.setAxiom($$[$0-1]); return lSys 
+ lSys.setAxiom($$[$0-1]); return lSys 
 break;
 case 2:
- console.log($$[$0-2]); lSys.setAxiom($$[$0-2]); return lSys 
+ lSys.setAxiom($$[$0-2]); return lSys 
 break;
 case 3:
  this.$ = [$$[$0]]
@@ -129,7 +129,7 @@ case 15:
  this.$ = new ProductionApplication(lSys.makeGetProduction($$[$0]), []) 
 break;
 case 16:
- this.$ = new ProductionApplication(lSys.makeGetProduction($$[$0-3]), $$[$0-1])
+ this.$ = new ProductionApplication(lSys.makeGetProduction($$[$0-3]), $$[$0-1]) 
 break;
 case 18: case 21:
  this.$ = [$$[$0-2]].concat($$[$0]) 
