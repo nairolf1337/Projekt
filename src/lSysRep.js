@@ -65,12 +65,12 @@ class LSystem {
      */
     makeGetProduction(lhs) {
         return () => { if(lhs in this.productions) return this.productions[lhs] 
-                       else return this.__idProduction__(lhs)
+                       else { this.setProduction(this.__idProduction__(lhs)); return this.productions[lhs] }
         }
     }
 
     __idProduction__(lhs) {
-        return new Production(lhs, new ProductionApplication(this.makeGetProduction(lhs), []))
+        return new Production(lhs, [new ProductionApplication(this.makeGetProduction(lhs), [])], [], LExpression.makeTrue(), this)
     }
 
     __getProduction__(lhs) {

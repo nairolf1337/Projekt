@@ -49,3 +49,34 @@ describe('L-System ohne Produktionen; nur Axiom: A', ()=> {
         expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, {lhs: 'A', args: []}])
     })
 })
+
+describe('L-System mit expliziten und Identitätsproduktionen gemischt', ()=> {
+    let lSys = parserFunc('A;A->CB;B->AB', new LSystem())
+
+    it("vor erster Iteration", ()=> {
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}])
+    })
+
+    it("nach erster Iteration", ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([{lhs: 'C', args: []}, {lhs: 'B', args: []}])
+    })
+
+    it("nach zweiter Iteration", ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([{lhs: 'C', args: []}, {lhs: 'A', args: []}, {lhs: 'B', args: []}])
+    })
+})
+
+describe('L-System mit expliziten und Identitätsproduktionen gemischt', ()=> {
+    let lSys = parserFunc('F(10);F(n)->[F(n/2)F(n/5)]', new LSystem())
+
+    it("vor erster Iteration", ()=> {
+        expect(lSys.readableState).toEqual([{lhs: 'F', args: [10]}])
+    })
+
+    it("nach erster Iteration", ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([{lhs: '[', args: []}, {lhs: 'F', args: [5]}, {lhs: 'F', args: [2]}, {lhs: ']', args: []}])
+    })
+})

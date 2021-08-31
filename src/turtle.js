@@ -2,6 +2,14 @@ import * as THREE from 'three'
 import { MathUtils } from 'three'
 
 //Winkel im Bogenmaß, zuvor Winkel auch im Argument verändert
+
+/**
+ * Rotiert einen Vektor um eine Achse
+ * @param {*} vector 
+ * @param {*} axis 
+ * @param {*} rotationAngle Winkel im Bogenmaß
+ * @returns 
+ */
 function rotateVector(vector, axis, rotationAngle) {
   let cosineRotationAngle = Math.cos(rotationAngle)
   let sineRotationAngle = Math.sin(rotationAngle)
