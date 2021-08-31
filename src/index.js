@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import * as dat from 'dat.gui'
 import ThreeTurtle from './turtle'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
+import '../style.css'
 
 function initWorld() {
   const renderer = new THREE.WebGLRenderer({antialias: true})
