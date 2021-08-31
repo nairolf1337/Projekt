@@ -2,7 +2,7 @@
 //Beginn Prolog
 const { LExpression, LSystem, Production, ProductionApplication } = require('./lSysRep.js')
 
-const lSys = new LSystem()
+let lSys = new LSystem()
 %}
 
 %lex
