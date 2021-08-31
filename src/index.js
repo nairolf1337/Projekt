@@ -7,7 +7,7 @@ import '../style.css'
 function initWorld() {
   const renderer = new THREE.WebGLRenderer({antialias: true})
   const scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xFFFFFF)
+  scene.background = new THREE.Color(0x000000)
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100)
   camera.position.z = 10
@@ -17,9 +17,12 @@ function initWorld() {
   lightSource.position.set(0,0,10)
   scene.add(lightSource)
 
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setSize(window.innerWidth, window.innerHeight * 0.75)
 
-  document.body.appendChild(renderer.domElement)
+  const mainDiv = document.createElement('div')
+  document.body.appendChild(mainDiv)
+  mainDiv.appendChild(renderer.domElement)
+  mainDiv.appendChild(document.createElement('textarea'))
 
   window.addEventListener('resize', ()=> {
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -29,6 +32,12 @@ function initWorld() {
 
   return {renderer, camera, scene, lightSource}
 }
+
+const gui = new dat.GUI()
+
+gui.addFolder('Gitterlinien')
+gui.addFolder('Kamera')
+gui.addFolder('Beispiele')
 
 const world = initWorld()
 const orbControls = new OrbitControls(world.camera, world.renderer.domElement)
@@ -57,13 +66,11 @@ const render = function() {
 }
 
 function drawLine(origin, destination, penColor) {
-  const material = new THREE.LineBasicMaterial({color: 0x000000})
+  const material = new THREE.LineBasicMaterial({color: 0xFFFFFF})
   const points = [origin, destination]
   const geometry = new THREE.BufferGeometry().setFromPoints(points)
   const newLine = new THREE.Line(geometry, material)
 
-
-  console.log('inside drawLine: ',origin, destination)
   world.scene.add(newLine)
 }
 
