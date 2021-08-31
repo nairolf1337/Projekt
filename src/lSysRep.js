@@ -64,7 +64,9 @@ class LSystem {
      * @returns Funktion 
      */
     makeGetProduction(lhs) {
-        return () => this.productions[lhs]
+        return () => { if(lhs in this.productions) return this.productions[lhs] 
+                       else return this.__idProduction__(lhs)
+        }
     }
 
     __idProduction__(lhs) {
@@ -95,7 +97,7 @@ class Production {
      * @param {Function} predicate 
      * @param {LSystem} lsystem 
      */
-    constructor(lhs, rhs, parameters = [], predicate = makeTrue(), lsystem) { //wenn predicate = 'undefined', dann wird true angenommen
+    constructor(lhs, rhs, parameters = [], predicate = LExpression.makeTrue(), lsystem) { //wenn predicate = 'undefined', dann wird true angenommen
         this.lhs = lhs
         this.rhs = rhs //ProductionApplication(s)
         this.predicate = predicate

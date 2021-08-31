@@ -36,3 +36,16 @@ describe('einfaches L-System mit Argumenten: A(0); A(n)->B(n);B(n)->A(n+1)B(n)',
         expect(lSys.readableState).toEqual([{lhs: 'A', args: [1]}, {lhs: 'B', args: [0]}])
     })
 })
+
+describe('L-System ohne Produktionen; nur Axiom: A', ()=> {
+    let lSys = parserFunc('AA', new LSystem())
+
+    it("vor erster Iteration", ()=> {
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, {lhs: 'A', args: []}])
+    })
+
+    it("nach erster Iteration", ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, {lhs: 'A', args: []}])
+    })
+})
