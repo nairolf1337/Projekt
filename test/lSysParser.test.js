@@ -1,7 +1,8 @@
 const parserFunc = require('lSysParser.js').parse
+const {LSystem, Production, ProductionApplication, LExpression} = require('lSysRep.js')
 
-/*describe('Test des Parsers; einfaches L-System ohne Argumente: A; A->B;B->AB', ()=> {
-    let lSys = parserFunc('A;A->B;B->AB')
+describe('Test des Parsers; einfaches L-System ohne Argumente: A; A->B;B->AB', ()=> {
+    let lSys = parserFunc('A;A->B;B->AB', new LSystem())
 
     it("vor erster Iteration", ()=> {
         expect(lSys.readableState).toEqual([{lhs: 'A', args: []}])
@@ -16,10 +17,10 @@ const parserFunc = require('lSysParser.js').parse
         lSys.iterate()
         expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, {lhs: 'B', args: []}])
     })
-})*/
+})
 
 describe('einfaches L-System mit Argumenten: A(0); A(n)->B(n);B(n)->A(n+1)B(n)', ()=> {
-    let lSys = require('lSysParser.js').parse('A(0); A(n)->B(n); B(n)->A(n+1)B(n)')
+    let lSys = parserFunc('A(0); A(n)->B(n);B(n)->A(n+1)B(n)', new LSystem())
 
     it("vor erster Iteration", ()=> {
         expect(lSys.readableState).toEqual([{lhs: 'A', args: [0]}])
