@@ -57,10 +57,6 @@ class LSystem {
         this.axiom = axiom.map(prodApp=>new ProductionApplication(prodApp.production(), prodApp.args))
         this.state = this.axiom
     }
-    
-    getProduction(lhs) {
-        return this.productions[lhs]
-    }
 
     /**
      * Rückgabe einer Funktion, welche bei Aufruf die durch lhs angegebene Funktion zurückgibt
@@ -68,7 +64,17 @@ class LSystem {
      * @returns Funktion 
      */
     makeGetProduction(lhs) {
-        return ()=>this.productions[lhs]
+        return () => this.productions[lhs]
+    }
+
+    __idProduction__(lhs) {
+        return new Production(lhs, new ProductionApplication(this.makeGetProduction(lhs), []))
+    }
+
+    __getProduction__(lhs) {
+        if(lhs in this.productions) {
+            return this.production[lhs]
+        }
     }
 
     get readableState() {
