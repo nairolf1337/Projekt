@@ -6,6 +6,8 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 %parse-param lSys
 
 %lex
+%s REC_SYMBOL
+%s REC_OPERATOR
 %%
 \s+     /*Leerzeichen überspringen*/
 [A-Z\[\]\\]     return 'SYMBOL'
