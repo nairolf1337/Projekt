@@ -8,7 +8,7 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 %lex
 %%
 \s+     /*Leerzeichen überspringen*/
-[A-Z\[\]\\]           return 'SYMBOL'
+[A-Z\[\]\\]     return 'SYMBOL'
 "true"          return 'TRUE'
 "false"         return 'FALSE'
 /*"rand"          return 'RAND'
@@ -20,10 +20,7 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 "|"             return '|'
 "->"            return '->'
 ","             return ','
-"*"             return '*'
-"/"             return '/'
-"+"             return '+'
-"-"             return '-'
+[+\-\*\/]       return yytext[0]
 "<"             return '<'
 ">"             return '>'
 "=="            return '=='
