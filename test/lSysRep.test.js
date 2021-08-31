@@ -1,4 +1,4 @@
-const {LExpression, LSystem, ProductionApplication, Production} = require('./lSysRep.js')
+const {LExpression, LSystem, ProductionApplication, Production} = require('lSysRep.js')
 
 describe("Tests der einzelnen Funktionen zur Darstellung von Ausdrücken", ()=> {
     let environment
@@ -79,17 +79,17 @@ describe("Einfaches LSystem; G(3);G=>G(n+3)", ()=> {
         lSys = new LSystem()
         pApp = new ProductionApplication(lSys.makeGetProduction('G'), [LExpression.makeAdd(LExpression.makeNum(3), LExpression.makeVarRef('n'))])
         prod = new Production('G', [pApp], ['n'], LExpression.makeTrue(), lSys)
-        lSys.setAxiom([new ProductionApplication(prod,[LExpression.makeNum(3)])])
         lSys.setProduction(prod)
+        lSys.setAxiom([new ProductionApplication(lSys.makeGetProduction('G'),[LExpression.makeNum(3)])])
     })
 
     it("Axiom: G(3), Produktion: G(n)=>G(3+n), Zustand vor erster Iteration", ()=> {
-        expect(lSys.readableState()).toEqual([{lhs: 'G', args: [3]}])
+        expect(lSys.readableState).toEqual([{lhs: 'G', args: [3]}])
     })
 
     it("Axiom: G(3), Produktion: G(n)=>G(3+n), nach erster Iteration", ()=> {
         lSys.iterate()
-        expect(lSys.readableState()).toEqual([{lhs: 'G', args: [6]}])
+        expect(lSys.readableState).toEqual([{lhs: 'G', args: [6]}])
     })
 })
 
@@ -103,17 +103,17 @@ describe("Einfaches LSystem, mehrere Parameter; F(3,5);F(n,m)=>F(n+3,m*2)", ()=>
         pApp = new ProductionApplication(lSys.makeGetProduction('F'), [LExpression.makeAdd(LExpression.makeNum(3),
                                                                        LExpression.makeVarRef('n')), LExpression.makeMul(LExpression.makeNum(2), LExpression.makeVarRef('m'))])
         prod = new Production('F', [pApp], ['n','m'], LExpression.makeTrue(), lSys)
-        lSys.setAxiom([new ProductionApplication(prod,[LExpression.makeNum(3), LExpression.makeNum(5)])])
         lSys.setProduction(prod)
+        lSys.setAxiom([new ProductionApplication(lSys.makeGetProduction('F'),[LExpression.makeNum(3), LExpression.makeNum(5)])])
     })
 
     it("Axiom: F(3,5), Produktion: F(n,m)=>F(3+n,2*m), Zustand vor erster Iteration", ()=> {
-        expect(lSys.readableState()).toEqual([{lhs: 'F', args: [3,5]}])
+        expect(lSys.readableState).toEqual([{lhs: 'F', args: [3,5]}])
     })
 
     it("Axiom: F(3,5), Produktion: F(n,m)=>F(3+n,2*m), Zustand nach erster Iteration", ()=> {
         lSys.iterate()
-        expect(lSys.readableState()).toEqual([{lhs: 'F', args: [6,10]}])
+        expect(lSys.readableState).toEqual([{lhs: 'F', args: [6,10]}])
     })
 })
 
@@ -126,17 +126,17 @@ describe("Einfaches LSystem, keine Parameter; P;P=>PP", ()=> {
         lSys = new LSystem()
         pApp = new ProductionApplication(lSys.makeGetProduction('P'), [])
         prod = new Production('P', [pApp, pApp], [], LExpression.makeTrue(), lSys)
-        lSys.setAxiom([new ProductionApplication(prod, [])])
         lSys.setProduction(prod)
+        lSys.setAxiom([new ProductionApplication(lSys.makeGetProduction('P'), [])])
     })
 
     it("Axiom: P, Produktion: P=>PP, Zustand vor erster Iteration", ()=> {
-        expect(lSys.readableState()).toEqual([{lhs: 'P', args: []}])
+        expect(lSys.readableState).toEqual([{lhs: 'P', args: []}])
     })
 
     it("Axiom: P, Produktion: P=>PP, Zustand nach erster Iteration", ()=> {
         lSys.iterate()
-        expect(lSys.readableState()).toEqual([{lhs: 'P', args: []}, {lhs: 'P', args: []}])
+        expect(lSys.readableState).toEqual([{lhs: 'P', args: []}, {lhs: 'P', args: []}])
     })
 })
 
@@ -157,30 +157,29 @@ describe("Unparameterisiertes LSystem, zwei Produktionen; A;A=>B;B=>AB", () => {
 
         lSys.setProduction(prodA)
         lSys.setProduction(prodB)
-        lSys.setAxiom([new ProductionApplication(prodA, [])])
+        lSys.setAxiom([new ProductionApplication(lSys.makeGetProduction('A'), [])])
     })
 
     it("Zustand vor erster Iteration", ()=> {
-        expect(lSys.readableState()).toEqual([{lhs: 'A', args: []}])
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}])
     })
 
     it("Zustand nach erster Iteration", ()=> {
         lSys.iterate()
-        expect(lSys.readableState()).toEqual([{lhs: 'B', args: []}])
+        expect(lSys.readableState).toEqual([{lhs: 'B', args: []}])
     })
 
     it("Zustand nach zweiter Iteration", ()=> {
         lSys.iterate()
         lSys.iterate()
-        expect(lSys.readableState()).toEqual([{lhs: 'A', args: []}, {lhs: 'B', args: []}])
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, {lhs: 'B', args: []}])
     })
 
     it("Zustand nach dritter Iteration", ()=> {
-        console.log(lSys)
         lSys.iterate()
         lSys.iterate()
         lSys.iterate()
-        expect(lSys.readableState()).toEqual([{lhs: 'B', args: []}, {lhs: 'A', args: []}, {lhs: 'B', args: []}])
+        expect(lSys.readableState).toEqual([{lhs: 'B', args: []}, {lhs: 'A', args: []}, {lhs: 'B', args: []}])
     })
 })
  
