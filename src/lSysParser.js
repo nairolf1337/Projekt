@@ -713,7 +713,7 @@ case 20:return 'UNRECOGNIZED TOKEN'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[+\-\*\/\\])/,/^(?:->)/,/^(?:[A-Z\[\]\+\-])/,/^(?:true\b)/,/^(?:false\b)/,/^(?:[a-z]+\b)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:;)/,/^(?:\|\|)/,/^(?:\|)/,/^(?:,)/,/^(?:<)/,/^(?:>)/,/^(?:==)/,/^(?:!)/,/^(?:&&)/,/^(?:\()/,/^(?:\))/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:\s+)/,/^(?:[+\-\*\/\\])/,/^(?:->)/,/^(?:[A-Z\[\]\+\-\\\/])/,/^(?:true\b)/,/^(?:false\b)/,/^(?:[a-z]+\b)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:;)/,/^(?:\|\|)/,/^(?:\|)/,/^(?:,)/,/^(?:<)/,/^(?:>)/,/^(?:==)/,/^(?:!)/,/^(?:&&)/,/^(?:\()/,/^(?:\))/,/^(?:$)/,/^(?:.)/],
 conditions: {"REC_OPERATOR":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true},"INITIAL":{"rules":[0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true}}
 });
 return lexer;
@@ -731,14 +731,6 @@ if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
 exports.parser = lSysParser;
 exports.Parser = lSysParser.Parser;
 exports.parse = function () { return lSysParser.parse.apply(lSysParser, arguments); };
-exports.main = function commonjsMain (args) {
-    if (!args[1]) {
-        console.log('Usage: '+args[0]+' FILE');
-        process.exit(1);
-    }
-    var source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
-    return exports.parser.parse(source);
-};
 if (typeof module !== 'undefined' && require.main === module) {
   exports.main(process.argv.slice(1));
 }

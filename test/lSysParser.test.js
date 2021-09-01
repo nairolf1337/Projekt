@@ -163,3 +163,17 @@ describe('L-System mit Turtle-Symbolen und Parametern', ()=> {
         ])
     })
 })
+
+describe('L-System Turtle Symbole; nur Axiom', ()=> {
+    let lSys = parserFunc('F(5)+(120)F(5)+(120)F(5)', new LSystem)
+
+    it('vor erster Iteration', ()=> {
+        expect(lSys.readableState).toEqual([
+            {lhs: 'F', args: [5]},
+            {lhs: '+', args: [120]},
+            {lhs: 'F', args: [5]},
+            {lhs: '+', args: [120]},
+            {lhs: 'F', args: [5]}
+        ])
+    })
+})

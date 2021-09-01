@@ -53,10 +53,7 @@ class ThreeTurtle {
   }
 
   rotate(degrees) {
-    console.log('rot. vector: ', this.rotationVector)
-    console.log('roll. vector: ', this.rollVector)
     this.rotationVector = rotateVector(this.rotationVector, this.rollVector, THREE.MathUtils.degToRad(degrees))
-    console.log('rot. vec. after rotation: ', this.rotationVector)
   }
 
   left(degrees) {
@@ -103,9 +100,22 @@ function interpretCommands(pen, lSysState, environment={}) {
                     '-': turtle.left,
                     '/': turtle.roll}
   
-  lSysState.forEach(({rhs, args})=>{
-    if(rhs in commands)
-      commands[rhs](args) //Befehl ausführen
+  console.log('Turtle pos.: ',turtle.position)
+  console.log('readableState: ', lSysState)
+  
+  lSysState.forEach(({lhs, args})=>{
+    if(lhs == 'F')
+      turtle.forward(args)
+    else if(lhs == '[')
+      turtle.pushState()
+    else if(lhs == ']')
+      turtle.popState()
+    else if(lhs == '+')
+      turtle.right(args)
+    else if(lhs == '-')
+      turtle.left(args)
+    else if(lhs == '/')
+      turtle.roll(args)
   })
 }
 

@@ -11,7 +11,7 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 \s+     /*Leerzeichen überspringen*/
 <REC_OPERATOR>[+\-\*\/\\]       return yytext[0]
 "->"            return '->'
-[A-Z\[\]\+\-]           return 'SYMBOL'
+[A-Z\[\]\+\-\\\/]           return 'SYMBOL'
 "true"          return 'TRUE'
 "false"         return 'FALSE'
 /*"rand"          return 'RAND'
