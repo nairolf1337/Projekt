@@ -80,3 +80,44 @@ describe('L-System mit expliziten und Identitätsproduktionen gemischt', ()=> {
         expect(lSys.readableState).toEqual([{lhs: '[', args: []}, {lhs: 'F', args: [5]}, {lhs: 'F', args: [2]}, {lhs: ']', args: []}])
     })
 })
+
+describe('L-System mit Turtle-Symbolen', ()=> {
+    let lSys = parserFunc('A;A->AF[+F-F]', new LSystem())
+
+    it('vor erster Iteration', ()=> {
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}])
+    })
+
+    it('nach erster Iteration', ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, 
+                                            {lhs: 'F', args: []},
+                                            {lhs: '[', args: []},
+                                            {lhs: '+', args: []},
+                                            {lhs: 'F', args: []},
+                                            {lhs: '-', args: []},
+                                            {lhs: 'F', args: []},
+                                            {lhs: ']', args: []}
+                                        ])
+    })
+
+    it('nach zweiter Iteration', ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: []}, 
+                                            {lhs: 'F', args: []},
+                                            {lhs: '[', args: []},
+                                            {lhs: '+', args: []},
+                                            {lhs: 'F', args: []},
+                                            {lhs: '-', args: []},
+                                            {lhs: 'F', args: []},
+                                            {lhs: ']', args: []}, 
+                                            {lhs: 'F', args: []},
+                                            {lhs: '[', args: []},
+                                            {lhs: '+', args: []},
+                                            {lhs: 'F', args: []},
+                                            {lhs: '-', args: []},
+                                            {lhs: 'F', args: []},
+                                            {lhs: ']', args: []}
+                                        ])
+    })
+})
