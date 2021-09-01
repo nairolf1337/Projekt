@@ -7,3 +7,11 @@ npm install --save-dev style-loader css-loader
 set-Axiom muss zuletzt aufgerufen werden
 
 Identitätsproduktionen funktionieren nicht wie erwartet. Die ProductionApplications von Identitätsproduktionen müssen unverändert in die nächste Iteration übernommen werden.
+
+
+Beispiele:
+F(2);
+F(n)->F(n)[+(45)F(n*0.75)][/(120)+(45)F(n*0.75)][/(240)-(45)F(n*0.75)]
+
+
+Push-Befehl zu Beginn
