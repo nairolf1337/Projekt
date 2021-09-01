@@ -43,6 +43,7 @@ class ThreeTurtle {
     this.previous = this.position.clone()
     this.position.add(this.rotationVector.clone().multiplyScalar(length))
 
+
     console.log('previous: ',this.previous)
     console.log('position: ',this.position)
 
