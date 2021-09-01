@@ -189,3 +189,16 @@ describe('L-System Turtle Symbole; nur Axiom', ()=> {
         ])
     })
 })
+
+describe('Identitätsproduktionen und Nichtidentitätsproduktionen gemischt', () => {
+    let lSys = parserFunc('B(3)F(1);F(n)->B(n)F(n+1)', new LSystem())
+
+    it('nach erster Iteration', ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([
+            {lhs: 'B', args: [3]},
+            {lhs: 'B', args: [1]},
+            {lhs: 'F', args: [2]}
+        ])
+    })
+})
