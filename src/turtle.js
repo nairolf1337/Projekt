@@ -89,4 +89,32 @@ class ThreeTurtle {
   }
 }
 
+/**
+ * 
+ * @param {*} pen 
+ * @param {{rhs: String, args: number[]}[]} lSysState 
+ * @param {*} environment 
+ */
+function interpretCommands(pen, lSysState, environment={}) {
+  const turtle = new ThreeTurtle(pen)
+  const commands = {'F': turtle.forward,
+                    '[': turtle.pushState,
+                    ']': turtle.popState,
+                    '+': turtle.right,
+                    '-': turtle.left,
+                    '/': turtle.roll}
+  
+  lSysState.forEach(({rhs, args})=>{
+    if(rhs in commands)
+      commands[rhs](args) //Befehl ausführen
+  })
+}
+
+class TurtleGraphicsInterpreter {
+  constructor(pen, environment={}) {
+    this.pen = pen
+    this.environment = environment
+  }
+}
+
 export default ThreeTurtle
