@@ -176,4 +176,16 @@ describe('L-System Turtle Symbole; nur Axiom', ()=> {
             {lhs: 'F', args: [5]}
         ])
     })
+
+    it('nach erster Iteration', ()=> {
+        console.log(lSys)
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([
+            {lhs: 'F', args: [5]},
+            {lhs: '+', args: [120]},
+            {lhs: 'F', args: [5]},
+            {lhs: '+', args: [120]},
+            {lhs: 'F', args: [5]}
+        ])
+    })
 })

@@ -70,7 +70,7 @@ class LSystem {
     }
 
     __idProduction__(lhs) {
-        return new Production(lhs, [new ProductionApplication(this.makeGetProduction(lhs), [])], [], LExpression.makeTrue(), this)
+        return new Production(lhs, [new ProductionApplication(this.makeGetProduction(lhs), [])], [], LExpression.makeTrue(), this, true)
     }
 
     __getProduction__(lhs) {
@@ -98,13 +98,14 @@ class Production {
      * @param {Function} predicate 
      * @param {LSystem} lsystem 
      */
-    constructor(lhs, rhs, parameters = [], predicate = LExpression.makeTrue(), lsystem) { //wenn predicate = 'undefined', dann wird true angenommen
+    constructor(lhs, rhs, parameters = [], predicate = LExpression.makeTrue(), lsystem, identity=false) { //wenn predicate = 'undefined', dann wird true angenommen
         this.lhs = lhs
         this.rhs = rhs //ProductionApplication(s)
         this.predicate = predicate
         this.parameters = parameters
         this.parameterNumber = this.parameters.length
         this.lsystem = lsystem
+        this.identity = identity
     }
 
     /**
@@ -178,6 +179,8 @@ class ProductionApplication {
      * @returns {ProductionApplication[]}
      */
     evalArgumentsInRHS(oldEnvironment) {
+        if(this.production.identity) return [this]
+
         let newEnvironment = this.evalArguments(oldEnvironment)
         let productionRHS = this.production.getRHS()
 
