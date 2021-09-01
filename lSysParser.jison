@@ -6,11 +6,12 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 %parse-param lSys
 
 %lex
-%s REC_SYMBOL
 %s REC_OPERATOR
 %%
 \s+     /*Leerzeichen überspringen*/
-<INITIAL>[A-Z\[\]\\\\/\+\-]    return 'SYMBOL'
+<REC_OPERATOR>[+\-\*\/\\]       return yytext[0]
+"->"            return '->'
+[A-Z\[\]\+\-]           return 'SYMBOL'
 "true"          return 'TRUE'
 "false"         return 'FALSE'
 /*"rand"          return 'RAND'
@@ -20,9 +21,7 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 ";"             return ';'
 "||"            return '||'
 "|"             return '|'
-<INITIAL>"->"            return '->'
 ","             return ','
-<REC_OPERATOR>[+\-\*\/\\]       return yytext[0]
 "<"             return '<'
 ">"             return '>'
 "=="            return '=='
@@ -71,7 +70,7 @@ rhs: ruleApp         { $$ = [$1] }
    | ruleApp rhs     { $$ = [$1].concat($2) };
 
 ruleApp: SYMBOL                  { $$ = new ProductionApplication(lSys.makeGetProduction($1), []) }
-       | SYMBOL rec_operator '(' argList rec_symbol ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $3) };
+       | SYMBOL rec_operator '(' argList  rec_symbol ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $4) };
 
 parmList: variable { $$ = [$1] }               
         | variable ',' parmList  { $$ = [$1].concat($3) }; //Parameter jeweils vorne anfügen

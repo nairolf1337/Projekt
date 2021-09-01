@@ -81,6 +81,7 @@ class LSystem {
 
     get readableState() {
         return this.state.map(prodApp=>{
+            console.log(typeof prodApp.args,':',prodApp.args)
             let argsAux = (typeof prodApp.args !== 'undefined')?prodApp.args.map(argFun=>argFun()):[]
             return {lhs: prodApp.production.lhs, args: argsAux}
         })

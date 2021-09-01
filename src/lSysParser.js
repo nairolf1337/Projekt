@@ -129,7 +129,7 @@ case 15:
  this.$ = new ProductionApplication(lSys.makeGetProduction($$[$0]), []) 
 break;
 case 16:
- this.$ = new ProductionApplication(lSys.makeGetProduction($$[$0-5]), $$[$0-3]) 
+ this.$ = new ProductionApplication(lSys.makeGetProduction($$[$0-5]), $$[$0-2]) 
 break;
 case 18: case 21:
  this.$ = [$$[$0-2]].concat($$[$0]) 
@@ -671,27 +671,27 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:/*Leerzeichen überspringen*/
 break;
-case 1:return 16
+case 1:return yy_.yytext[0]
 break;
-case 2:return 35
+case 2:return 11
 break;
-case 3:return 36
+case 3:return 16
 break;
-case 4:return 26
+case 4:return 35
 break;
-case 5:return 37
+case 5:return 36
 break;
-case 6:return 6
+case 6:return 26
 break;
-case 7:return 33
+case 7:return 37
 break;
-case 8:return 14
+case 8:return 6
 break;
-case 9:return 11
+case 9:return 33
 break;
-case 10:return 25
+case 10:return 14
 break;
-case 11:return yy_.yytext[0]
+case 11:return 25
 break;
 case 12:return 30
 break;
@@ -713,8 +713,8 @@ case 20:return 'UNRECOGNIZED TOKEN'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[A-Z\[\]\\\\/\+\-])/,/^(?:true\b)/,/^(?:false\b)/,/^(?:[a-z]+\b)/,/^(?:[0-9]+\b)/,/^(?:;)/,/^(?:\|\|)/,/^(?:\|)/,/^(?:->)/,/^(?:,)/,/^(?:[+\-\*\/\\])/,/^(?:<)/,/^(?:>)/,/^(?:==)/,/^(?:!)/,/^(?:&&)/,/^(?:\()/,/^(?:\))/,/^(?:$)/,/^(?:.)/],
-conditions: {"REC_OPERATOR":{"rules":[0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true},"REC_SYMBOL":{"rules":[0,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20],"inclusive":true},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[+\-\*\/\\])/,/^(?:->)/,/^(?:[A-Z\[\]\+\-])/,/^(?:true\b)/,/^(?:false\b)/,/^(?:[a-z]+\b)/,/^(?:[0-9]+\b)/,/^(?:;)/,/^(?:\|\|)/,/^(?:\|)/,/^(?:,)/,/^(?:<)/,/^(?:>)/,/^(?:==)/,/^(?:!)/,/^(?:&&)/,/^(?:\()/,/^(?:\))/,/^(?:$)/,/^(?:.)/],
+conditions: {"REC_OPERATOR":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true},"INITIAL":{"rules":[0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true}}
 });
 return lexer;
 })();
