@@ -45,18 +45,6 @@ const orbControls = new OrbitControls(world.camera, world.renderer.domElement)
 world.camera.position.y = 3
 orbControls.update()
 
-/* const material = new THREE.LineBasicMaterial({color: 0xFF0000})
-let points = [new THREE.Vector3(0,0,0), new THREE.Vector3(0,10,0)]
-const geometry = new THREE.BufferGeometry().setFromPoints(points)
-
-const line = new THREE.Line( geometry, material )
-
-world.scene.add(line)
-
-points = [new THREE.Vector3(0,0,0), new THREE.Vector3(5,5,5)]
-const geometry2 = new THREE.BufferGeometry().setFromPoints(points)
-const line2 = new THREE.Line( geometry2, material )
-world.scene.add(line2) */
 
 const grid = new THREE.GridHelper(10,10)
 world.scene.add(grid)
@@ -68,33 +56,10 @@ const render = function() {
   world.renderer.render(world.scene, world.camera)
 }
 
-function drawLine(origin, destination, penColor) {
-  const material = new THREE.LineBasicMaterial({color: 0xFFFFFF})
-  const points = [origin, destination]
-  const geometry = new THREE.BufferGeometry().setFromPoints(points)
-  const newLine = new THREE.Line(geometry, material)
-
-  world.scene.add(newLine)
-}
-
 const turtle = new ThreeTurtle(makeStandardPen(world.scene))
 
 render()
 
-/* turtle.forward(2)
-turtle.pushState()
-//turtle.rotate(45)
-turtle.left(45)
-turtle.forward(2)
-turtle.popState()
-//turtle.rotate(360-45)
-turtle.right(45)
-turtle.forward(3) */
-
-
-/*F
-F(n)->F[-(45)/(45)F(n*0.8)]+(45)/(45)F(n*.7)
-*/
 function toTree(length) {
   if(length > .2) {
     turtle.forward(length)
