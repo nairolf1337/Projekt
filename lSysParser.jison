@@ -10,7 +10,7 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 %s REC_OPERATOR
 %%
 \s+     /*Leerzeichen überspringen*/
-[A-Z\[\]\\]     return 'SYMBOL'
+<INITIAL>[A-Z\[\]\\\\/\+\-]    return 'SYMBOL'
 "true"          return 'TRUE'
 "false"         return 'FALSE'
 /*"rand"          return 'RAND'
@@ -20,9 +20,9 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 ";"             return ';'
 "||"            return '||'
 "|"             return '|'
-"->"            return '->'
+<INITIAL>"->"            return '->'
 ","             return ','
-[+\-\*\/]       return yytext[0]
+<REC_OPERATOR>[+\-\*\/\\]       return yytext[0]
 "<"             return '<'
 ">"             return '>'
 "=="            return '=='
@@ -71,15 +71,15 @@ rhs: ruleApp         { $$ = [$1] }
    | ruleApp rhs     { $$ = [$1].concat($2) };
 
 ruleApp: SYMBOL                  { $$ = new ProductionApplication(lSys.makeGetProduction($1), []) }
-       | SYMBOL '(' argList ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $3) };
+       | SYMBOL rec_operator '(' argList rec_symbol ')' { $$ = new ProductionApplication(lSys.makeGetProduction($1), $3) };
 
 parmList: variable { $$ = [$1] }               
         | variable ',' parmList  { $$ = [$1].concat($3) }; //Parameter jeweils vorne anfügen
 
 variable: VARIABLE { $$ = $1 };
 
-argList: relExp      { $$ = [$1] }
-       | relExp ',' argList  { $$ = [$1].concat($3) };
+argList: relExp { $$ = [$1] }
+       | relExp ',' argList { $$ = [$1].concat($3) };
 
 /*Algebraische Ausdrücke*/
 relExp: booleanPrimary { $$ = $1 }
@@ -103,3 +103,6 @@ exp: NUMBER { $$ = LExpression.makeNum(Number($1)) }
    | exp '/' exp { $$ = LExpression.makeDiv($1, $3) }
    | '-' exp %prec UMINUS { $$ = LExpression.makeSub(0, $2) }
    | '(' exp ')' { $$ = $2 }; //mehrdeutig
+
+rec_operator:                 { yy.lexer.begin('REC_OPERATOR') };
+rec_symbol:                   { yy.lexer.popState() };
