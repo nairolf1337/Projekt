@@ -11,6 +11,7 @@ function initWorld() {
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100)
   camera.position.z = 10
+  camera.position.y = 0
   scene.add(camera)
 
   const lightSource = new THREE.PointLight(0xFFFFFF, 1, 100)
@@ -41,6 +42,8 @@ gui.addFolder('Beispiele')
 
 const world = initWorld()
 const orbControls = new OrbitControls(world.camera, world.renderer.domElement)
+world.camera.position.y = 3
+orbControls.update()
 
 /* const material = new THREE.LineBasicMaterial({color: 0xFF0000})
 let points = [new THREE.Vector3(0,0,0), new THREE.Vector3(0,10,0)]
