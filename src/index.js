@@ -60,7 +60,8 @@ const turtle = new ThreeTurtle(makeStandardPen(world.scene))
 
 render()
 
-function toTree(length) {
+//T(2)->
+/*function toTree(length) {
   if(length > .2) {
     turtle.forward(length)
     turtle.pushState()
@@ -74,4 +75,4 @@ function toTree(length) {
   }
 }
 
-toTree(2)
+toTree(2)*/

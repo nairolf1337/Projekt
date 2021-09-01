@@ -17,7 +17,7 @@ const { LExpression, LSystem, Production, ProductionApplication } = require('./l
 /*"rand"          return 'RAND'
 "iteration"     return 'ITERATION'*/
 [a-z]+\b        return 'VARIABLE'
-[0-9]+\b        return 'NUMBER'
+[0-9]+(\.[0-9]+)?\b        return 'NUMBER'
 ";"             return ';'
 "||"            return '||'
 "|"             return '|'
