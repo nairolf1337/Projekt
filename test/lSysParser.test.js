@@ -121,3 +121,24 @@ describe('L-System mit Turtle-Symbolen', ()=> {
                                         ])
     })
 })
+
+describe('L-System mit Turtle-Symbolen und Parametern', ()=> {
+    let lSys = parserFunc('A(0);A(n)->F[+A(n+3)]-A(n-4)', new LSystem())
+
+    it('vor erster Iteration', ()=> {
+        expect(lSys.readableState).toEqual([{lhs: 'A', args: [0]}])
+    })
+
+    it('nach erster Iteration', ()=> {
+        lSys.iterate()
+        expect(lSys.readableState).toEqual([
+            {lhs: 'F', args: []},
+            {lhs: '[', args: []},
+            {lhs: '+', args: []},
+            {lhs: 'A', args: [3]},
+            {lhs: ']', args: []},
+            {lhs: '-', args: []},
+            {lhs: 'A', args: [-4]}
+        ])
+    })
+})
