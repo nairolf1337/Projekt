@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import * as dat from 'dat.gui'
-import ThreeTurtle from './turtle'
+import {ThreeTurtle, makeStandardPen, interpretCommands} from './turtle'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import '../style.css'
 
@@ -77,7 +77,7 @@ function drawLine(origin, destination, penColor) {
   world.scene.add(newLine)
 }
 
-const turtle = new ThreeTurtle(drawLine)
+const turtle = new ThreeTurtle(makeStandardPen(world.scene))
 
 render()
 

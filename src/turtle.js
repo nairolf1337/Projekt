@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import { MathUtils } from 'three'
 
 //Winkel im Bogenmaß, zuvor Winkel auch im Argument verändert
 
@@ -110,11 +109,15 @@ function interpretCommands(pen, lSysState, environment={}) {
   })
 }
 
-class TurtleGraphicsInterpreter {
-  constructor(pen, environment={}) {
-    this.pen = pen
-    this.environment = environment
+function makeStandardPen(scene) {
+  return (origin, destination, penColor) => {
+    const material = new THREE.LineBasicMaterial({color: 0xFFFFFF})
+    const points = [origin, destination]
+    const geometry = new THREE.BufferGeometry().setFromPoints(points)
+    const newLine = new THREE.Line(geometry, material)
+  
+    scene.add(newLine)
   }
 }
 
-export default ThreeTurtle
+export { ThreeTurtle, interpretCommands, makeStandardPen }
