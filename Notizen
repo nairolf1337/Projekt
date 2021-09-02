@@ -4,6 +4,9 @@ html-webpack-plugin
 npm install --save-dev html-webpack-plugin
 npm install --save-dev style-loader css-loader
 
+npm install --save eslint
+eslint --init
+
 set-Axiom muss zuletzt aufgerufen werden
 
 Identitätsproduktionen funktionieren nicht wie erwartet. Die ProductionApplications von Identitätsproduktionen müssen unverändert in die nächste Iteration übernommen werden.
