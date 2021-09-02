@@ -64,7 +64,7 @@ const gui = new dat.GUI()
 const world = initWorld()
 const parameters = { iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {}}
 
-const settings = gui.addFolder('Generierung')
+const settings = gui.addFolder('Iterationen')
 const camera = gui.addFolder('Kamera')
 const grid = gui.addFolder('Gitter')
 const examples = gui.addFolder('Beispiele')
