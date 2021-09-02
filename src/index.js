@@ -8,9 +8,11 @@ import { LSystem } from './lSysRep'
 const parseFunc = require('./lSysParser.js').parse
 
 
-lSysExamples = {
-  one: "G(3);\nG(n)->[+(30)F(n/2)G(n/2)][-(30)F(n/2)G(n/2)]/(90)[+(45)F(n/2)G(n/2)][-(45)F(n/2)G(n/2)]",
-  two: "F(2);\nF(n)->F(n)[+(45)F(n*0.75)][/(120)+(45)F(n*0.75)][/(240)-(45)F(n*0.75)]"
+const lSysExamples = {
+  leer: "",
+  eins: "G(3);\nG(n)->[+(30)F(n/2)G(n/2)][-(30)F(n/2)G(n/2)]/(90)[+(45)F(n/2)G(n/2)][-(45)F(n/2)G(n/2)]",
+  zwei: "F(2);\nF(n)->F(n)[+(45)F(n*0.75)][/(120)+(45)F(n*0.75)][/(240)-(45)F(n*0.75)]",
+  drei: "F(1);\nF(n)->F(n*0.5)[+(25)F(n*0.5)]F(n*0.5)[-(25)F(n*0.5)]F(n*0.5)"
 }
 
 /**
@@ -24,7 +26,7 @@ function initWorld() {
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100)
   camera.position.z = 10
-  camera.position.y = 0
+  camera.position.y = 5
   scene.add(camera)
 
   const lightSource = new THREE.PointLight(0xFFFFFF, 1, 100)
@@ -40,8 +42,8 @@ function initWorld() {
   mainDiv.appendChild(textArea)
 
   window.addEventListener('resize', ()=> {
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    camera.aspect = window.innerWidth / window.innerHeight
+    renderer.setSize(window.innerWidth, window.innerHeight * 0.75)
+    camera.aspect = (window.innerWidth / (window.innerHeight * 0.75))
     camera.updateProjectionMatrix()
   })
 
@@ -59,7 +61,6 @@ const gui = new dat.GUI()
 
 const world = initWorld()
 const parameters = { iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {}}
-world.camera.position.y = 3
 
 const settings = gui.addFolder('Parameter')
 const camera = gui.addFolder('Kamera')
@@ -68,7 +69,7 @@ const examples = gui.addFolder('Beispiele')
 
 settings.add(parameters, 'iterations', 0, 10, 1).name("Iterationen")
 
-camera.add(parameters, 'autoRotate').name("automatisch Drehen").onChange(() => {
+camera.add(parameters, 'autoRotate').name("auto Drehen").onChange(() => {
   world.orbControls.autoRotate = !world.orbControls.autoRotate
 })
 
@@ -80,13 +81,15 @@ grid.add(parameters, 'axesActive').name("Achsen aktiv").onChange(() => {
   world.axesHelper.visible = !world.axesHelper.visible
 })
 
-/*examples.add(examples2, 'examples').name("Beispiele")*/
-
-gui.add({generate: function() { const lSys = parseFunc(world.textArea.value, new LSystem())
+gui.add({generate: function() { world.scene.remove.apply(world.scene, world.scene.children);
+                                world.scene.add(world.axesHelper)
+                                world.scene.add(world.gridHelper)
+                                
+                                const lSys = parseFunc(world.textArea.value, new LSystem())
                                 for(let i = 0; i < parameters.iterations; ++i) lSys.iterate()
                                 interpretCommands(makeStandardPen(world.scene), lSys.readableState) }}, 'generate').name("Ausgabe generieren")
 
-examples.add(parameters, 'chosenExample', lSysExamples ).name("Beispiel").onChange(()=> {console.log(parameters.chosenExample)})
+examples.add(parameters, 'chosenExample', lSysExamples ).name("Beispiel").onChange(()=> { world.textArea.value = parameters.chosenExample; console.log(parameters.chosenExample) })
 //Animationsschleife
 const render = function() {
   requestAnimationFrame(render)

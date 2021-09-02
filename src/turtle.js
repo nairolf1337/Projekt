@@ -94,15 +94,6 @@ class ThreeTurtle {
  */
 function interpretCommands(pen, lSysState, environment={}) {
   const turtle = new ThreeTurtle(pen)
-  const commands = {'F': turtle.forward,
-                    '[': turtle.pushState,
-                    ']': turtle.popState,
-                    '+': turtle.right,
-                    '-': turtle.left,
-                    '/': turtle.roll}
-  
-  console.log('Turtle pos.: ',turtle.position)
-  console.log('readableState: ', lSysState)
   
   lSysState.forEach(({lhs, args})=>{
     if(lhs == 'F')
@@ -117,6 +108,8 @@ function interpretCommands(pen, lSysState, environment={}) {
       turtle.left(args)
     else if(lhs == '/')
       turtle.roll(args)
+    else if(lhs == '\\')
+      turtle.roll(360-args)
   })
 }
 
