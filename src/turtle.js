@@ -35,7 +35,7 @@ class ThreeTurtle {
     this.rollVector = rollVector
     this.pen = pen
     this.penDown = penDown
-    this.previous = undefined
+    this.previous = this.position
     this.stack = []
   }
 

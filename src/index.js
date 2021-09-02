@@ -7,6 +7,16 @@ import { LSystem } from './lSysRep'
 
 const parseFunc = require('./lSysParser.js').parse
 
+
+lSysExamples = {
+  one: "G(3);\nG(n)->[+(30)F(n/2)G(n/2)][-(30)F(n/2)G(n/2)]/(90)[+(45)F(n/2)G(n/2)][-(45)F(n/2)G(n/2)]",
+  two: "F(2);\nF(n)->F(n)[+(45)F(n*0.75)][/(120)+(45)F(n*0.75)][/(240)-(45)F(n*0.75)]"
+}
+
+/**
+ * Initialisierung ThreeJS bzw. Oberfläche
+ * @returns {Object}
+ */
 function initWorld() {
   const renderer = new THREE.WebGLRenderer({antialias: true})
   const scene = new THREE.Scene()
@@ -35,60 +45,54 @@ function initWorld() {
     camera.updateProjectionMatrix()
   })
 
-  return {renderer, camera, scene, lightSource, textArea}
+  const gridHelper = new THREE.GridHelper(10,10)
+  scene.add(gridHelper)
+  const axesHelper = new THREE.AxesHelper(5)
+  scene.add(axesHelper)
+  const orbControls = new OrbitControls(camera, renderer.domElement)
+  orbControls.update()
+
+  return {renderer, camera, scene, lightSource, textArea, gridHelper, axesHelper, orbControls}
 }
 
 const gui = new dat.GUI()
 
 const world = initWorld()
-const orbControls = new OrbitControls(world.camera, world.renderer.domElement)
+const parameters = { iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {}}
 world.camera.position.y = 3
-orbControls.update()
 
-
-const parameters = { iterations: 0 }
 const settings = gui.addFolder('Parameter')
-settings.add(parameters, 'iterations', 0, 10, 1)
-gui.addFolder('Gitterlinien')
-gui.addFolder('Kamera')
-gui.addFolder('Beispiele')
+const camera = gui.addFolder('Kamera')
+const grid = gui.addFolder('Gitter')
+const examples = gui.addFolder('Beispiele')
+
+settings.add(parameters, 'iterations', 0, 10, 1).name("Iterationen")
+
+camera.add(parameters, 'autoRotate').name("automatisch Drehen").onChange(() => {
+  world.orbControls.autoRotate = !world.orbControls.autoRotate
+})
+
+grid.add(parameters, 'gridActive').name("Gitter aktiv").onChange(() => {
+  world.gridHelper.visible = !world.gridHelper.visible
+})
+
+grid.add(parameters, 'axesActive').name("Achsen aktiv").onChange(() => {
+  world.axesHelper.visible = !world.axesHelper.visible
+})
+
+/*examples.add(examples2, 'examples').name("Beispiele")*/
+
 gui.add({generate: function() { const lSys = parseFunc(world.textArea.value, new LSystem())
                                 for(let i = 0; i < parameters.iterations; ++i) lSys.iterate()
-                                interpretCommands(makeStandardPen(world.scene), lSys.readableState) }}, 'generate')
+                                interpretCommands(makeStandardPen(world.scene), lSys.readableState) }}, 'generate').name("Ausgabe generieren")
 
-
-const grid = new THREE.GridHelper(10,10)
-world.scene.add(grid)
-
-
+examples.add(parameters, 'chosenExample', lSysExamples ).name("Beispiel").onChange(()=> {console.log(parameters.chosenExample)})
+//Animationsschleife
 const render = function() {
   requestAnimationFrame(render)
-  orbControls.update()
+
+  world.orbControls.update()
   world.renderer.render(world.scene, world.camera)
 }
 
-/*const turtle = new ThreeTurtle(makeStandardPen(world.scene))
-
-
-const lsys = parseFunc("F(5)+(120)F(5)+(120)F(5)", new LSystem())
-
-interpretCommands(makeStandardPen(world.scene), lsys.readableState)*/
-
 render()
-
-//T(2);T(l)|l > 0.2->F(l)[-(45)/(45)T(l*0.8)]+(45)T(l*0.7)
-/*function toTree(length) {
-  if(length > .2) {
-    turtle.forward(length)
-    turtle.pushState()
-    turtle.left(45)
-    turtle.roll(45)
-    toTree(length * .8)
-    turtle.popState()
-    turtle.right(45)
-    turtle.roll(45)
-    toTree(length * .7)
-  }
-}
-
-toTree(2)*/
