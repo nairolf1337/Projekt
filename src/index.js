@@ -70,7 +70,7 @@ const examples = gui.addFolder('Beispiele')
 
 settings.add(parameters, 'iterations', 0, 10, 1).name("Iterationen")
 
-camera.add(parameters, 'autoRotate').name("auto Drehen").onChange(() => {
+camera.add(parameters, 'autoRotate').name("autom drehen").onChange(() => {
   world.orbControls.autoRotate = !world.orbControls.autoRotate
 })
 
