@@ -25,11 +25,14 @@ function rotateVector(vector, axis, rotationAngle) {
   return returnVector;
 }
 
-// Problem: Das momentane Design der Klasse ThreeTurtle erlaubt keine parallele Bearbeitung der einzelnen Zweige einer Gabelung. Es existiert lediglich ein Turtle-Objekt für die gesamte Laufzeit
-// des Programms. Erweiterung zu asynchroner Abarbeitung?
+// Problem: Das momentane Design der Klasse ThreeTurtle erlaubt keine parallele Bearbeitung
+// der einzelnen Zweige einer Gabelung.Es existiert lediglich ein Turtle-Objekt für die
+// gesamte Laufzeit des Programms. Erweiterung zu asynchroner Abarbeitung?
 class ThreeTurtle {
   constructor(pen, {
-    position = new THREE.Vector3(0, 0, 0), rotationVector = new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(90)), Math.sin(THREE.MathUtils.degToRad(90)), 0),
+    position = new THREE.Vector3(0, 0, 0),
+    rotationVector = new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(90)),
+      Math.sin(THREE.MathUtils.degToRad(90)), 0),
     rollVector = new THREE.Vector3(0, 0, 1), penDown = true,
   } = {}) {
     this.position = position;
