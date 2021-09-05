@@ -1,0 +1,46 @@
+@startuml
+
+skinparam ObjectBackgroundColor #AliceBlue
+skinparam ObjectBorderColor #Blue
+skinparam ArrowColor #Blue
+
+map lSystem {
+    axiom => [prodAppA]
+    productions =>  [productionA, productionB]
+}
+
+map productionA {
+    lhs => "A"
+    parameters => []
+    predicate => makeTrue()
+    rhs => [prodAppB]
+}
+
+map productionB {
+    lhs => "B"
+    parameters => []
+    predicate => makeTrue()
+    rhs => [prodAppA, prodAppB]
+}
+
+map prodAppA {
+    production => productionA
+    arguments => []
+}
+
+map prodAppB {
+    production => productionB
+    arguments => []
+}
+
+lSystem::axiom -d-> prodAppA
+lSystem::productions -d-> productionA
+lSystem::productions -d-> productionB
+productionA::rhs -d-> prodAppB
+productionB::rhs -d-> prodAppA
+productionB::rhs -> prodAppB
+
+prodAppA::production -u-> productionA
+prodAppB::production -u-> productionB
+
+@enduml
