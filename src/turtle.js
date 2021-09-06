@@ -17,9 +17,9 @@ function rotateVector(vector, axis, rotationAngle) {
 
   // vector * cos rotationAngle + ...
   returnVector.multiplyScalar(cosineRotationAngle)
-  // axis x vector * sin rotationAngle +...
+    // axis x vector * sin rotationAngle +...
     .add(axis.clone().cross(vector).multiplyScalar(sineRotationAngle))
-  // axis*(axis.vector)*(1-cos theta)
+    // axis*(axis.vector)*(1-cos theta)
     .add(axis.clone().multiplyScalar(axis.dot(vector)).multiplyScalar(1 - cosineRotationAngle));
 
   return returnVector;

@@ -1,14 +1,12 @@
 {
-  "name": "projekt",
+  "name": "abschlussprojekt",
   "version": "1.0.0",
   "description": "",
   "main": "lSysRep.js",
   "scripts": {
     "test": "jest --runInBand"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/three": "^0.131.0",

@@ -16,14 +16,14 @@ module.exports = {
     },
     
     //ggf. bundle Analyzer
-    devtool: 'inline-source-map', //Error messages refer to the original files, rather than our bundle
+    devtool: 'inline-source-map',
     
-    devServer: { //devServer can be started using 'npm run startDevServer'
+    devServer: {
         contentBase: './dist'
     },
 
     plugins: [
-        new HtmlWebpackPlugin({ //auto generate html page
+        new HtmlWebpackPlugin({ 
             title: "LTurtle"
         })
     ],
@@ -32,6 +32,6 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname,'dist'),
-        clean: true //dist folder will only contain files from the current build
+        clean: true
     }
 }

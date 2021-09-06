@@ -10,5 +10,6 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "max-classes-per-file": ["error", 3]
     }
 }

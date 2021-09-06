@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // Refactoring
 const LExpression = {
   makeNum: (p) => (_) => p,
@@ -64,7 +65,8 @@ class LSystem {
      * @param {[ProductionApplication]} axiom
      */
   setAxiom(axiom) {
-    this.axiom = axiom.map((prodApp) => new ProductionApplication(prodApp.production(), prodApp.args));
+    this.axiom = axiom.map((prodApp) => new ProductionApplication(prodApp.production(),
+      prodApp.args));
     this.state = this.axiom;
   }
 
@@ -81,7 +83,7 @@ class LSystem {
   }
 
   __idProduction__(lhs) {
-    return new Production(lhs, [new ProductionApplication(this.makeGetProduction(lhs), [])], [], LExpression.makeTrue(), this, true);
+    return new Production(lhs, [new ProductionApplication(this.makeGetProduction(lhs), [])],[], LExpression.makeTrue(), this, true);
   }
 
   __getProduction__(lhs) {
@@ -108,7 +110,8 @@ class Production {
      * @param {Function} predicate
      * @param {LSystem} lsystem
      */
-  constructor(lhs, rhs, parameters = [], predicate = LExpression.makeTrue(), lsystem, identity = false) { // wenn predicate = 'undefined', dann wird true angenommen
+  constructor(lhs, rhs, parameters = [], predicate = LExpression.makeTrue(),
+    lsystem, identity = false) { // wenn predicate = 'undefined', dann wird true angenommen
     this.lhs = lhs;
     this.rhs = rhs; // ProductionApplication(s)
     this.predicate = predicate;
@@ -121,7 +124,8 @@ class Production {
   /**
      * Wertet Produktion im Hinblick auf übergebene Argumente aus
      * @param {Array} args Enthält die Auswertungsresultate der Ausdrücke
-     * @param {Productions} productions Produktionsregeln des L-System, welchem diese Produktion angehört
+     * @param {Productions} productions Produktionsregeln des L-System,
+     * welchem diese Produktion angehört
      * @return {Array[ProductionApplication]}
      */
   evaluateProduction(args, productions) {
@@ -166,8 +170,10 @@ class ProductionApplication {
   }
 
   /**
-     * Auswertung der einer einzelnen Produktion als Parameter übergebenen Ausdrücke anhand eines Environment-Objekts
-     * @param {Object} environment Einfache Zuordnung von Variablennamen zu deren jeweiligem Wert, z.B. {'foo': 42, 'leet': true}
+     * Auswertung der einer einzelnen Produktion als Parameter übergebenen Ausdrücke anhand
+     * eines Environment-Objekts
+     * @param {Object} environment Einfache Zuordnung von Variablennamen zu deren
+     * jeweiligem Wert, z.B. {'foo': 42, 'leet': true}
      * @return {Object} neues Environment
      */
   evalArguments(environment) {
