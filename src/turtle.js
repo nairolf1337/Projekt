@@ -46,7 +46,7 @@ class ThreeTurtle {
 
   forward(length) {
     this.previous = this.position.clone();
-    this.position.add(this.rotationVector.clone().multiplyScalar(length));
+    this.position.add(this.rotationVector.clone().multiplyScalar(length[0]));
 
     if (this.penDown) {
       this.pen(this.previous, this.position, undefined);
