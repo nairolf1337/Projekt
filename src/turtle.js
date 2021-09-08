@@ -111,7 +111,7 @@ function interpretCommands(pen, lSysState, environment = {}) {
 
 function makeStandardPen(scene) {
   return (origin, destination, penColor) => {
-    const material = new THREE.LineBasicMaterial({ color: 0x00FF00 });
+    const material = new THREE.LineBasicMaterial({ color: 0xFFFFFF });
     const points = [origin, destination];
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
     const newLine = new THREE.Line(geometry, material);
