@@ -24,7 +24,7 @@ const lSysExamples = {
 function initWorld() {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
+  scene.background = new THREE.Color(0xFFFFFF);
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100);
   camera.position.z = 10;
