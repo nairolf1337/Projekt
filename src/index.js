@@ -14,7 +14,7 @@ const lSysExamples = {
   drei: 'F(1);\nF(n)->F(n*0.5)[+(25)F(n*0.5)]F(n*0.5)[-(25)F(n*0.5)]F(n*0.5)',
   dreieck: 'F(6)+(120)F(6)+(120)F(6);\nF(n)->F(n/2)-(120)F(n/2)+(120)F(n/2)',
   kraut: 'F(5);\nF(n)->-(3)F(n/3)[+(45)/(60)F(n/3)]-(3)F(n/3)[-(30)/(120)F(n/3)]+(3)/(240)F(n/3)',
-  baum: `-(10)G(2);\\\\nG(n)->F(n)\(120)[-(20)G(n/2)][+(10)G(n/1.3)]\\\\(120)[+(30)G(n/1.5)]`
+  baum: '-(10)G(2);\\\\nG(n)->F(n)\(120)[-(20)G(n/2)][+(10)G(n/1.3)]\\\\(120)[+(30)G(n/1.5)]',
 };
 
 /**
@@ -24,14 +24,14 @@ const lSysExamples = {
 function initWorld() {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xFFFFFF);
+  scene.background = new THREE.Color(0x000000);
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100);
   camera.position.z = 10;
   camera.position.y = 5;
   scene.add(camera);
 
-  const lightSource = new THREE.PointLight(0x000000, 1, 100);
+  const lightSource = new THREE.PointLight(0xFFFFFF, 1, 100);
   lightSource.position.set(0, 0, 10);
   scene.add(lightSource);
 
@@ -65,13 +65,14 @@ const gui = new dat.GUI();
 
 const world = initWorld();
 const parameters = {
-  iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {},
+  iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {}, backgroundColor: [0, 0, 0],
 };
 
 const settings = gui.addFolder('Iterationen');
 const camera = gui.addFolder('Kamera');
 const grid = gui.addFolder('Gitter');
 const examples = gui.addFolder('Beispiele');
+const colors = gui.addFolder('Farben');
 
 settings.add(parameters, 'iterations', 0, 10, 1).name('Iterationen');
 
@@ -87,6 +88,10 @@ grid.add(parameters, 'axesActive').name('Achsen aktiv').onChange(() => {
   world.axesHelper.visible = !world.axesHelper.visible;
 });
 
+colors.addColor(parameters, 'backgroundColor').name('Hintergrundfarbe').onChange(() => {
+  world.scene.background = new THREE.Color(parameters.backgroundColor[0], parameters.backgroundColor[1], parameters.backgroundColor[2]);
+});
+
 gui.add({
   generate() {
     world.scene.remove(world.scene, ...world.scene.children);
@@ -99,6 +104,7 @@ gui.add({
     interpretCommands(makeStandardPen(world.scene), lSys.readableState);
   },
 }, 'generate').name('Ausgabe generieren');
+
 
 examples.add(parameters, 'chosenExample', lSysExamples).name('Beispiel').onChange(() => { world.textArea.value = parameters.chosenExample; });
 // Animationsschleife
