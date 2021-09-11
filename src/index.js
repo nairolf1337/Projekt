@@ -65,7 +65,7 @@ const gui = new dat.GUI();
 
 const world = initWorld();
 const parameters = {
-  iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {}, backgroundColor: [0, 0, 0],
+  iterations: 0, autoRotate: false, gridActive: true, axesActive: true, chosenExample: '', examples: {}, backgroundColor: 0x000000, penColor: 0xFFFFFF,
 };
 
 const settings = gui.addFolder('Iterationen');
@@ -89,7 +89,7 @@ grid.add(parameters, 'axesActive').name('Achsen aktiv').onChange(() => {
 });
 
 colors.addColor(parameters, 'backgroundColor').name('Hintergrundfarbe').onChange(() => {
-  world.scene.background = new THREE.Color(parameters.backgroundColor[0], parameters.backgroundColor[1], parameters.backgroundColor[2]);
+  world.scene.background = new THREE.Color(parameters.backgroundColor);
 });
 
 gui.add({
