@@ -72,7 +72,7 @@ const settings = gui.addFolder('Iterationen');
 const camera = gui.addFolder('Kamera');
 const grid = gui.addFolder('Gitter');
 const examples = gui.addFolder('Beispiele');
-const colors = gui.addFolder('Farben');
+//const colors = gui.addFolder('Farben');
 
 settings.add(parameters, 'iterations', 0, 10, 1).name('Iterationen');
 
@@ -88,9 +88,9 @@ grid.add(parameters, 'axesActive').name('Achsen aktiv').onChange(() => {
   world.axesHelper.visible = !world.axesHelper.visible;
 });
 
-colors.addColor(parameters, 'backgroundColor').name('Hintergrundfarbe').onChange(() => {
+/*colors.addColor(parameters, 'backgroundColor').name('Hintergrundfarbe').onChange(() => {
   world.scene.background = new THREE.Color(parameters.backgroundColor);
-});
+});*/
 
 gui.add({
   generate() {
